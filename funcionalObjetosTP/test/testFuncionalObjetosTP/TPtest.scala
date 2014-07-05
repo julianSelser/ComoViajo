@@ -7,7 +7,26 @@ import mock.ModuloT
 import transportes._
 
 class TPtest 
-{    
+{  
+    
+      
+  @Test
+  def `prueba del metodo "decime"` 
+  {    
+    ModuloT.transportes devuelve Seq(Punto(Direccion("Campus", "1420"), Colectivo("114")))
+    ModuloT.transportes devuelve Seq(Punto(Direccion("Medrano", "2455"), Colectivo("7")))
+   
+    ModuloT.distanciaColectivoEntre setRetornoDefault 4
+    ModuloT.distanciaAPieEntre setRetornoDefault 3
+    
+    //Da solo un recorrido directo segun lo planeado
+    val recorrido = comoViajoEntre(Direccion("Cordoba", "980"), Direccion("Ramallo", "109")).head
+    val test = decime(recorrido)
+    val deberiaDar = " Caminar 3.0 metros desde calle Cordoba al 980 hasta calle Medrano al 2455. Caminar 3.0 metros desde calle Campus al 1420 hasta calle Ramallo al 109."
+    
+    assertEquals(test, deberiaDar)        
+  } 
+  
   @Test
   def `prueba de armado de recorridos directos` 
   {    
@@ -19,7 +38,7 @@ class TPtest
     
     //Da solo un recorrido directo segun lo planeado
     val tramosDelRecorrido = comoViajoEntre(Direccion("calle1"), Direccion("calle2")).head.tramos
-    val deberiaDar =List(Camninando(Direccion("calle1","",""),Direccion("CALLE","",""),7.5f,0.0f), Viajando(Colectivo("11",""),Direccion("CALLE","",""),Direccion("calle","",""),2.75f,1.0f), Camninando(Direccion("calle","",""),Direccion("calle2","",""),7.5f,0.0f))
+    val deberiaDar = List(Camninando(Direccion("calle1","",""),Direccion("CALLE","",""),7.5f,0.0f), Viajando(Colectivo("11",""),Direccion("CALLE","",""),Direccion("calle","",""),2.75f,1.0f), Camninando(Direccion("calle","",""),Direccion("calle2","",""),7.5f,0.0f))
     
     assertEquals(tramosDelRecorrido, deberiaDar)        
   }  

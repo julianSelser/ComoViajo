@@ -2,6 +2,7 @@ package TP
 
 import mock._
 import transportes._
+import scala.collection.mutable.MutableList
 
 package object funcionalObjetos
 { 
@@ -27,7 +28,13 @@ package object funcionalObjetos
   
   def seLlegaDirecto:PartialFunction[(Punto, Punto), List[Tramo]] = { case (x, y) if x.transporte == y.transporte => 
     Viajando(x.transporte, x.direccion, y.direccion, x.transporte.costoEntre(x.direccion, y.direccion), x.transporte.duracionEntre(x.direccion, y.direccion))::Nil
-  }  
+  } 
+  
+  def decime(recorrido:Recorrido) = {
+    ModuloEstadistico.recorridos += recorrido
+    
+    recorrido.tramos.foldLeft("")((comoViajar, tramo) => comoViajar + tramo.decite)
+  }
       
   def tardanzaCaminandoEntre(o:Direccion, d:Direccion) =  2.5f*ModuloT.distanciaAPieEntre(o, d)
 
