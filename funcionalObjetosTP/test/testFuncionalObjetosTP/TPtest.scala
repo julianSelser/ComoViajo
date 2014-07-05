@@ -7,14 +7,12 @@ import mock.ModuloT
 import transportes._
 
 class TPtest 
-{  
-    
-      
+{      
   @Test
   def `prueba del metodo "decime"` 
   {    
     ModuloT.transportes devuelve Seq(Punto(Direccion("Campus", "1420"), Colectivo("114")))
-    ModuloT.transportes devuelve Seq(Punto(Direccion("Medrano", "2455"), Colectivo("7")))
+    ModuloT.transportes devuelve Seq(Punto(Direccion("Medrano", "2455"), Colectivo("114")))
    
     ModuloT.distanciaColectivoEntre setRetornoDefault 4
     ModuloT.distanciaAPieEntre setRetornoDefault 3
@@ -22,7 +20,7 @@ class TPtest
     //Da solo un recorrido directo segun lo planeado
     val comoViajo = comoViajoEntre(Direccion("Cordoba", "980"), Direccion("Ramallo", "109"))
     val test = decime(comoViajo masBarato)
-    val deberiaDar = " Caminar 3.0 metros desde calle Cordoba al 980 hasta calle Medrano al 2455. Caminar 3.0 metros desde calle Campus al 1420 hasta calle Ramallo al 109."
+    val deberiaDar = " Caminar 3.0 metros desde calle Cordoba al 980 hasta calle Medrano al 2455. En la calle Medrano al 2455 subirse al Colectivo y viajar durante 1.0 minutos antes de bajarse en la calle Campus. Caminar 3.0 metros desde calle Campus al 1420 hasta calle Ramallo al 109."
     
     assertEquals(test, deberiaDar)        
   } 
@@ -134,6 +132,5 @@ class TPtest
     val deberiaDar = List(Camninando(Direccion("dPrincipio","",""),Direccion("dCSubis","",""),12.5f,0.0f), Viajando(Colectivo("11",""),Direccion("dCSubis","",""),Direccion("dCSubis","",""),2.5f,0.75f), Camninando(Direccion("dCSubis","",""),Direccion("dFinal","",""),12.5f,0.0f))
     
     assertEquals(test, deberiaDar)
-  }  
-  
+  }    
 }
