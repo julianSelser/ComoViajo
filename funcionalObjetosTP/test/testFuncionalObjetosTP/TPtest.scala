@@ -20,8 +20,8 @@ class TPtest
     ModuloT.distanciaAPieEntre setRetornoDefault 3
     
     //Da solo un recorrido directo segun lo planeado
-    val recorrido = comoViajoEntre(Direccion("Cordoba", "980"), Direccion("Ramallo", "109")).head
-    val test = decime(recorrido)
+    val comoViajo = comoViajoEntre(Direccion("Cordoba", "980"), Direccion("Ramallo", "109"))
+    val test = decime(comoViajo masBarato)
     val deberiaDar = " Caminar 3.0 metros desde calle Cordoba al 980 hasta calle Medrano al 2455. Caminar 3.0 metros desde calle Campus al 1420 hasta calle Ramallo al 109."
     
     assertEquals(test, deberiaDar)        
