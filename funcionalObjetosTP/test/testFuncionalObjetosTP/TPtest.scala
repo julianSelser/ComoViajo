@@ -23,6 +23,22 @@ class TPtest
     val deberiaDar = " Caminar 3.0 metros desde calle Cordoba al 980 hasta calle Medrano al 2455. En la calle Medrano al 2455 subirse al Colectivo y viajar durante 1.0 minutos antes de bajarse en la calle Campus. Caminar 3.0 metros desde calle Campus al 1420 hasta calle Ramallo al 109."
     
     assertEquals(test, deberiaDar)        
+  }  
+     
+  @Test
+  def `prueba de tarjeta de discapacitados` 
+  {    
+    ModuloT.transportes devuelve Seq(Punto(Direccion("Campus", "1420"), Colectivo("114")))
+    ModuloT.transportes devuelve Seq(Punto(Direccion("Medrano", "2455"), Colectivo("114")))
+   
+    ModuloT.distanciaColectivoEntre setRetornoDefault 4
+    ModuloT.distanciaAPieEntre setRetornoDefault 3
+    
+    val comoViajo = comoViajoEntre(Direccion("Cordoba", "980"), Direccion("Ramallo", "109"))
+    val recorrido =  (comoViajo masBarato).conTarjeta(Discapacitado())
+    val deberiaDar = 0f
+    
+    assertEquals(recorrido.precio, deberiaDar, 0f)        
   } 
   
   @Test
