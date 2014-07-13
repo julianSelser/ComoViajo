@@ -18,12 +18,12 @@ case class Turismo(todoOAlguno:(Boolean,Boolean)=>Boolean = todo, barrio:String)
   }
 }
 
-case class Discapacitado extends Tarjeta
+case class Discapacitado() extends Tarjeta
 {  
   override def precio = 0f
 }
 
-case class YendoAlTrabajo extends Tarjeta
+case class YendoAlTrabajo() extends Tarjeta
 {
   override def precio = {
     val origen = tramos.head.origen
