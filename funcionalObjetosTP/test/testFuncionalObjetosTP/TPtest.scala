@@ -62,7 +62,7 @@ class TPtest
   {
     val elOnce = new Colectivo("11", "Compania2")
     val elSiete = new Colectivo("7", "Compania1")
-    val direccion = new Direccion("Direccion", "Altura", "Barrio")
+    val direccion = new Direccion("Direccion", "Altura", "Barrio",new Zona("Zona"))
     
     ModuloT.hayCombinacion setRetornoDefault None
     
