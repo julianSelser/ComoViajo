@@ -6,6 +6,7 @@ trait Recorrido
   def duracion:Float
   def decite:String
   def tramos:List[Tramo]
+  def transportes = tramos.map(tramo => tramo.nombreDelTransporte())
 }
 
 class RecorridoBase(val tramos:List[Tramo]) extends Recorrido

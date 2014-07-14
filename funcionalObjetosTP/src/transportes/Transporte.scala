@@ -9,6 +9,7 @@ abstract class Transporte{
 
   def costoEntre(origen: Direccion, destino: Direccion): Float
   def duracionEntre(origen: Direccion, destino: Direccion): Float
+  def nombre():String
 }
 
 trait TransporteConEstaciones {
@@ -17,6 +18,9 @@ trait TransporteConEstaciones {
 
 case class Colectivo(linea: String = "", compania: String = "") extends Transporte 
 {
+  override def nombre():String = {
+    return "Colectivo"
+  }
   def costoEntre(origen: Direccion, destino: Direccion): Float = {
     val distancia = ModuloT.distanciaColectivoEntre(origen, destino, this)
 
@@ -36,6 +40,9 @@ case class Colectivo(linea: String = "", compania: String = "") extends Transpor
 
 case class Subte(linea: String = "", compania: String = "", estaciones: Seq[Estacion]) extends Transporte with TransporteConEstaciones 
 {
+  override def nombre():String = {
+    return "Subte"
+  }
   //falta implementar...para mostrarlo saco las NotImplementedExceptions
   def costoEntre(origen:Direccion, destino:Direccion) = 5
   def duracionEntre(origen: Direccion, destino: Direccion) = 5
@@ -43,6 +50,9 @@ case class Subte(linea: String = "", compania: String = "", estaciones: Seq[Esta
 
 case class Tren(estaciones: Seq[Estacion], linea: String = "", compania: String = "", precios: Map[Int, Float] = null) extends Transporte with TransporteConEstaciones 
 {
+  override def nombre():String = {
+    return "Tren"
+  }
   //falta implementar...para mostrarlo saco las NotImplementedExceptions
   def costoEntre(origen: Direccion, destino: Direccion) = 5
   def duracionEntre(origen: Direccion, destino: Direccion) = 5

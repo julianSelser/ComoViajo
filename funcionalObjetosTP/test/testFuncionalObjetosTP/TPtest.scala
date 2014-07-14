@@ -20,7 +20,7 @@ class TPtest
     //Da solo un recorrido directo segun lo planeado
     val comoViajo = comoViajoEntre(Direccion("Cordoba", "980"), Direccion("Ramallo", "109"))
     val test = decime(comoViajo masBarato)
-    val deberiaDar = " Caminar 3.0 metros desde calle Cordoba al 980 hasta calle Medrano al 2455. En la calle Medrano al 2455 subirse al Colectivo y viajar durante 1.0 minutos antes de bajarse en la calle Campus. Caminar 3.0 metros desde calle Campus al 1420 hasta calle Ramallo al 109."
+    val deberiaDar = "Caminar 3.0 metros desde calle Cordoba al 980 hasta calle Medrano al 2455. En la calle Medrano al 2455 subirse al Colectivo y viajar durante 1.0 minutos antes de bajarse en la calle Campus.Caminar 3.0 metros desde calle Campus al 1420 hasta calle Ramallo al 109."
     
     assertEquals(test, deberiaDar)        
   }  
@@ -148,5 +148,19 @@ class TPtest
     val deberiaDar = List(Camninando(Direccion("dPrincipio","",""),Direccion("dCSubis","",""),12.5f,0.0f), Viajando(Colectivo("11",""),Direccion("dCSubis","",""),Direccion("dCSubis","",""),2.5f,0.75f), Camninando(Direccion("dCSubis","",""),Direccion("dFinal","",""),12.5f,0.0f))
     
     assertEquals(test, deberiaDar)
-  }    
+  }   
+  
+  @Test
+  def `prueba de "modulo estadistico almacena el transporte"` 
+  {
+    ModuloT.transportes devuelve Seq(Punto(Direccion("calle"), Colectivo("11")))
+    ModuloT.transportes devuelve Seq(Punto(Direccion("CALLE"), Colectivo("11")))
+   
+    ModuloT.distanciaColectivoEntre setRetornoDefault 4
+    ModuloT.distanciaAPieEntre setRetornoDefault 3
+    
+    comoViajoEntre(Direccion("calle1"), Direccion("calle2")).head.tramos
+    
+    assertTrue(ModuloEstadistico.recorridos.exists(r => r.transportes.contains("Colectivo")))
+  }
 }
