@@ -1,4 +1,4 @@
-package util
+package mock
 
 class MetodoMock[TipoParametros, TipoRetorno] 
 {

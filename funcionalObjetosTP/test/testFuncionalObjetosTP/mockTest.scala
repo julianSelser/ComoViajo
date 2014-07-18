@@ -1,11 +1,11 @@
 package testFuncionalObjetosTP
 
-import util._
 import org.junit._
 import org.junit.Assert._
 import TP.funcionalObjetos._
 import mock.ModuloT
 import transportes._
+import mock._
 
 class mockTest 
 {  

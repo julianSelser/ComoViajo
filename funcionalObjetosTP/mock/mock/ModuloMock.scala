@@ -3,12 +3,12 @@ package mock
 import mock._
 import transportes._
 import TP.funcionalObjetos._
-import util.MetodoMock
+import mock.MetodoMock
 
 object ModuloT 
 {
-  var transportes = new MetodoMock[(Direccion), Seq[Punto]]
-  var hayCombinacion = new MetodoMock[(Colectivo, Colectivo), Option[Direccion]]
-  var distanciaAPieEntre = new MetodoMock[(Direccion, Direccion), Float]
-  var distanciaColectivoEntre = new MetodoMock[(Direccion, Direccion, Colectivo), Float]
+  val transportes = new MetodoMock[(Direccion), Seq[Punto]]
+  val hayCombinacion = new MetodoMock[(Colectivo, Colectivo), Option[Direccion]]
+  val distanciaAPieEntre = new MetodoMock[(Direccion, Direccion), Float]
+  val distanciaColectivoEntre = new MetodoMock[(Direccion, Direccion, Colectivo), Float]
 }
