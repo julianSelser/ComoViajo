@@ -1,9 +1,7 @@
 package mock
 
 import mock._
-import transportes._
 import TP.funcionalObjetos._
-import mock.MetodoMock
 
 object ModuloT 
 {

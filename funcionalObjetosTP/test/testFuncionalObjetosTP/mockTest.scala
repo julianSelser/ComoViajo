@@ -4,8 +4,8 @@ import org.junit._
 import org.junit.Assert._
 import TP.funcionalObjetos._
 import mock.ModuloT
-import transportes._
 import mock._
+import TP.funcionalObjetos.Colectivo
 
 class mockTest 
 {  

@@ -1,7 +1,6 @@
 package TP.funcionalObjetos
 
 import mock.ModuloT
-import transportes._
 
 trait Tramo {
   def costo: Float

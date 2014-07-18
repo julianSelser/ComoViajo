@@ -4,7 +4,9 @@ import TP.funcionalObjetos._
 import org.junit._
 import org.junit.Assert._
 import mock.ModuloT
-import transportes._
+import TP.funcionalObjetos.Tren
+import TP.funcionalObjetos.Subte
+import TP.funcionalObjetos.Colectivo
 
 class TPtest 
 {      

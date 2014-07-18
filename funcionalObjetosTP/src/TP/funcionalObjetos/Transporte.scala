@@ -1,7 +1,6 @@
-package transportes
+package TP.funcionalObjetos
 
-import mock.ModuloT
-import TP.funcionalObjetos._
+import mock._
 
 abstract class Transporte{
   def linea: String
