@@ -1,14 +1,16 @@
 package TP.funcionalObjetos
 
-abstract class Tarjeta(var recorrido:Recorrido = null) extends Recorrido
+abstract class Tarjeta extends Recorrido
 {
+  def recorrido:Recorrido
+  
   def precio = recorrido.precio
   def duracion = recorrido.duracion
   def decite = recorrido.decite
   def tramos = recorrido.tramos
 }
 
-case class Turismo(todoOAlguno:(Boolean,Boolean)=>Boolean = todo, barrio:String) extends Tarjeta
+case class TarjetaTurismo(recorrido:Recorrido, barrio:String, todoOAlguno:(Boolean,Boolean)=>Boolean = todo) extends Tarjeta
 {
   override def precio = {
     if (tramos.foldLeft(true)((resultado, tramo) => todoOAlguno(resultado, tramo.origen.barrio == barrio && tramo.destino.barrio == barrio)))     
@@ -18,12 +20,12 @@ case class Turismo(todoOAlguno:(Boolean,Boolean)=>Boolean = todo, barrio:String)
   }
 }
 
-case class Discapacitado() extends Tarjeta
+case class TarjetaDiscapacitado(recorrido:Recorrido) extends Tarjeta
 {  
   override def precio = 0f
 }
 
-case class YendoAlTrabajo() extends Tarjeta
+case class TarjetaYendoAlTrabajo(recorrido:Recorrido) extends Tarjeta
 {
   override def precio = {
     val origen = tramos.head.origen

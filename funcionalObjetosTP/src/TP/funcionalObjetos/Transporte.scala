@@ -1,6 +1,7 @@
 package TP.funcionalObjetos
 
 import mock._
+import math._
 
 abstract class Transporte{
   def linea: String
@@ -8,24 +9,26 @@ abstract class Transporte{
 
   def costoEntre(origen: Direccion, destino: Direccion): Float
   def duracionEntre(origen: Direccion, destino: Direccion): Float
-  def nombre():String
+  def nombre = this.toString.split('(').head
 }
 
 trait TransporteConEstaciones {
   def estaciones: Seq[Estacion]
+  
+  //el numero de estaciones es el valor absoluto de al diferencia entre indices
+  def cantEstacionesEntreDirecciones(origen:Direccion, destino:Direccion) = 
+    abs(estaciones.indexWhere(e => e.direccion == origen) - estaciones.indexWhere(e => e.direccion == destino))
+  
 }
 
 case class Colectivo(linea: String = "", compania: String = "") extends Transporte 
 {
-  override def nombre():String = {
-    return "Colectivo"
-  }
   def costoEntre(origen: Direccion, destino: Direccion): Float = {
     val distancia = ModuloT.distanciaColectivoEntre(origen, destino, this)
 
     distancia match {
       case _ if distancia <= 3f => 2.5f
-      case _ if distancia > 3f && distancia < 6f => 2.75f
+      case _ if distancia < 6f => 2.75f
       case _ if distancia >= 6f => 2.85f
     }
   }
@@ -39,22 +42,16 @@ case class Colectivo(linea: String = "", compania: String = "") extends Transpor
 
 case class Subte(linea: String = "", compania: String = "", estaciones: Seq[Estacion]) extends Transporte with TransporteConEstaciones 
 {
-  override def nombre():String = {
-    return "Subte"
-  }
-  //falta implementar...para mostrarlo saco las NotImplementedExceptions
-  def costoEntre(origen:Direccion, destino:Direccion) = 5
-  def duracionEntre(origen: Direccion, destino: Direccion) = 5
+  def costoEntre(origen:Direccion, destino:Direccion) = 4.5f //segun lo que dice el enunciado
+  
+  def duracionEntre(origen: Direccion, destino: Direccion) = 2*cantEstacionesEntreDirecciones(origen, destino)
 }
 
-case class Tren(estaciones: Seq[Estacion], linea: String = "", compania: String = "", precios: Map[Int, Float] = null) extends Transporte with TransporteConEstaciones 
+case class Tren(estaciones: Seq[Estacion], linea: String = "", compania: String = "", precios: Int=>Float = preciosPorEstacionDefault) extends Transporte with TransporteConEstaciones 
 {
-  override def nombre():String = {
-    return "Tren"
-  }
-  //falta implementar...para mostrarlo saco las NotImplementedExceptions
-  def costoEntre(origen: Direccion, destino: Direccion) = 5
-  def duracionEntre(origen: Direccion, destino: Direccion) = 5
+  def costoEntre(origen: Direccion, destino: Direccion) = precios(cantEstacionesEntreDirecciones(origen, destino))
+  
+  def duracionEntre(origen: Direccion, destino: Direccion) = 3*cantEstacionesEntreDirecciones(origen, destino)
 }
 
 case class Punto(val direccion: Direccion, val transporte: Transporte)

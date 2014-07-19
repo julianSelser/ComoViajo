@@ -45,6 +45,14 @@ package object funcionalObjetos {
     recorrido.decite
   }
 
+  //cada tren tiene sus propias tarifas segun cantidad de estaciones, pero si no se especifica...
+  //las tarifas default son las que dice el enunciado, dadas en la siguiente funcion
+  def preciosPorEstacionDefault(numeroEstaciones:Int) = numeroEstaciones match{
+    case _ if numeroEstaciones <= 5 => 2f
+    case _ if numeroEstaciones <= 8 => 3.5f
+    case _ => 4.75f
+  } 
+  
   def tardanzaCaminandoEntre(o: Direccion, d: Direccion) = 2.5f * ModuloT.distanciaAPieEntre(o, d)
 
   def armarCombinaciones(Po: Punto, Pd: Punto) = ArmarCombinacion()(Po, Pd)

@@ -6,7 +6,7 @@ trait Recorrido
   def duracion:Float
   def decite:String
   def tramos:List[Tramo]
-  def transportes = tramos.map(tramo => tramo.nombreDelTransporte())
+  //def transportes = tramos.map(tramo => tramo)
 }
 
 class RecorridoBase(val tramos:List[Tramo]) extends Recorrido
@@ -16,10 +16,4 @@ class RecorridoBase(val tramos:List[Tramo]) extends Recorrido
   def duracion = tramos.foldLeft(0f)((resultado, tramo) => resultado + tramo.duracion)
   
   def decite = tramos.foldLeft("")((comoViajar, tramo) => comoViajar + tramo.decite)
-  
-  def conTarjeta(tarjeta:Tarjeta):Recorrido = {
-    tarjeta.recorrido = this
-    
-    return tarjeta
-  }
 }

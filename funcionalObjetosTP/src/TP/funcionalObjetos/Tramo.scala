@@ -8,40 +8,24 @@ trait Tramo {
   def decite : String
   def origen: Direccion
   def destino: Direccion
-  def nombreDelTransporte():String
 }
 
 case class Camninando(origen: Direccion, destino: Direccion, duracion: Float, costo: Float = 0) extends Tramo{
   def decite = {
-    nombreDelTransporte()+" " + ModuloT.distanciaAPieEntre(origen, destino).toString + " metros desde calle " + origen.calle + " al " + origen.altura + " hasta calle " +  destino.calle + " al " + destino.altura + "."
-  }
-  override def nombreDelTransporte():String = {
-    "Caminar"
+    "Caminar" + " " + ModuloT.distanciaAPieEntre(origen, destino).toString + " metros desde calle " + origen.calle + " al " + origen.altura + " hasta calle " +  destino.calle + " al " + destino.altura + "."
   }
 }
 
 //todo esto lo hice a ultimo momento...ver despues que se puede arreglar y como poner las estaciones...
 case class Viajando(transporte: Transporte, origen: Direccion, destino: Direccion, costo: Float, duracion: Float) extends Tramo{
   def decite = {
-    " En la calle " + origen.calle + " al " + origen.altura + " subirse al " + nombreDelTransporte() +  " y viajar durante " + duracion.toString + " minutos antes de bajarse en la calle " + destino.calle + "."  
-  }
-  
-  override def nombreDelTransporte():String = {
-    transporte match{
-      case _:Subte => "Subte"
-      case _:Tren => "Tren"
-      case _:Colectivo => "Colectivo"
-    }
-  }
+    " En la calle " + origen.calle + " al " + origen.altura + " subirse al " + transporte.nombre +  " y viajar durante " + duracion.toString + " minutos antes de bajarse en la calle " + destino.calle + "."  
+  }   
 }
 
 //a esta clase hay que pasarle los transportes para que sepa que esta combinando, es facil de hacer
 case class Combinando(duracion: Float, costo:Float, origen: Direccion = null, destino: Direccion = null) extends Tramo{
   def decite = " Hacer una combinacion que tardara " + duracion + "minutos."
-  
-  override def nombreDelTransporte():String = {
-    "Combinacion"
-  }
 }
 
 case class ArmarCombinacion(seguir:Boolean = true)

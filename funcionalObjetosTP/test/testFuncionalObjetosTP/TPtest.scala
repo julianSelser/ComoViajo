@@ -36,11 +36,10 @@ class TPtest
     ModuloT.distanciaColectivoEntre setRetornoDefault 4
     ModuloT.distanciaAPieEntre setRetornoDefault 3
     
-    val comoViajo = comoViajoEntre(Direccion("Cordoba", "980"), Direccion("Ramallo", "109"))
-    val recorrido =  (comoViajo masBarato).conTarjeta(Discapacitado())
-    val deberiaDar = 0f
+    val recorrido = comoViajoEntre(Direccion("Cordoba", "980"), Direccion("Ramallo", "109")) masBarato
+    val recorridoConTarjeta =  TarjetaDiscapacitado(recorrido)
     
-    assertEquals(recorrido.precio, deberiaDar, 0f)        
+    assertEquals(recorridoConTarjeta.precio, 0f, 0f)        
   } 
   
   @Test
@@ -105,10 +104,10 @@ class TPtest
     val E = new Subte("E", "Compania2", Seq(Estacion("Car", dNoImporta), Estacion("los", dNoImporta), Estacion("berto", direccionCombinacion)))
 
     val test = armarCombinaciones(Punto(direccionInical, A),Punto(direccionFinal, E))
-    val deberiaDar = List(Viajando(Subte("A","Compania1",List(Estacion("rob",Direccion("calleNoImporta","","")), Estacion("berto",Direccion("calleCombinacion","","")))),Direccion("calleIncial","",""),Direccion("calleCombinacion","",""),5.0f,5.0f), Combinando(4.0f,-4.5f,null,null), Viajando(Subte("E","Compania2",List(Estacion("Car",Direccion("calleNoImporta","","")), Estacion("los",Direccion("calleNoImporta","","")), Estacion("berto",Direccion("calleCombinacion","","")))),Direccion("calleCombinacion","",""),Direccion("calleFinal","",""),5.0f,5.0f))    
+    val deberiaDar = List(Viajando(Subte("A","Compania1",List(Estacion("rob",Direccion("calleNoImporta","","",Zona(""))), Estacion("berto",Direccion("calleCombinacion","","",Zona(""))))),Direccion("calleIncial","","",Zona("")),Direccion("calleCombinacion","","",Zona("")),4.5f,4.0f), Combinando(4.0f,-4.5f,null,null), Viajando(Subte("E","Compania2",List(Estacion("Car",Direccion("calleNoImporta","","",Zona(""))), Estacion("los",Direccion("calleNoImporta","","",Zona(""))), Estacion("berto",Direccion("calleCombinacion","","",Zona(""))))),Direccion("calleCombinacion","","",Zona("")),Direccion("calleFinal","","",Zona("")),4.5f,6.0f))    
     
     assertEquals(test, deberiaDar)        
-  }
+  }  
   
   @Test
   def `prueba de combinacion entre trenes` 
@@ -121,8 +120,12 @@ class TPtest
     val Mitre = new Tren(Seq(Estacion("rob", dNoImporta), Estacion("berto", direccionCombinacion)), "Mitre")
     val Sarmiento = new Tren(Seq(Estacion("Car", dNoImporta), Estacion("los", dNoImporta), Estacion("berto", direccionCombinacion)), "Sarmiento")
 
+    //por alguna razon no reconoce a la funcion de precios default
+    val f = Mitre.precios
+    val g = Sarmiento.precios
+    
     val test = armarCombinaciones(Punto(direccionInical, Mitre),Punto(direccionFinal, Sarmiento))
-    val deberiaDar = List(Viajando(Tren(List(Estacion("rob",Direccion("calleNoImporta","","")), Estacion("berto",Direccion("calleCombinacion","",""))),"Mitre","",null),Direccion("calleIncial","",""),Direccion("calleCombinacion","",""),5.0f,5.0f), Combinando(6.0f,0.0f,null,null), Viajando(Tren(List(Estacion("Car",Direccion("calleNoImporta","","")), Estacion("los",Direccion("calleNoImporta","","")), Estacion("berto",Direccion("calleCombinacion","",""))),"Sarmiento","",null),Direccion("calleCombinacion","",""),Direccion("calleFinal","",""),5.0f,5.0f))    
+    val deberiaDar = List(Viajando(Tren(List(Estacion("rob",Direccion("calleNoImporta","","",Zona(""))), Estacion("berto",Direccion("calleCombinacion","","",Zona("")))),"Mitre","",f),Direccion("calleIncial","","",Zona("")),Direccion("calleCombinacion","","",Zona("")),2.0f,6.0f), Combinando(6.0f,0.0f,null,null), Viajando(Tren(List(Estacion("Car",Direccion("calleNoImporta","","",Zona(""))), Estacion("los",Direccion("calleNoImporta","","",Zona(""))), Estacion("berto",Direccion("calleCombinacion","","",Zona("")))),"Sarmiento","",g),Direccion("calleCombinacion","","",Zona("")),Direccion("calleFinal","","",Zona("")),2.0f,9.0f))    
     
     assertEquals(test, deberiaDar)        
   }
@@ -151,18 +154,4 @@ class TPtest
     
     assertEquals(test, deberiaDar)
   }   
-  
-  @Test
-  def `prueba de "modulo estadistico almacena el transporte"` 
-  {
-    ModuloT.transportes devuelve Seq(Punto(Direccion("calle"), Colectivo("11")))
-    ModuloT.transportes devuelve Seq(Punto(Direccion("CALLE"), Colectivo("11")))
-   
-    ModuloT.distanciaColectivoEntre setRetornoDefault 4
-    ModuloT.distanciaAPieEntre setRetornoDefault 3
-    
-    comoViajoEntre(Direccion("calle1"), Direccion("calle2")).head.tramos
-    
-    assertTrue(ModuloEstadistico.recorridos.exists(r => r.transportes.contains("Colectivo")))
-  }
 }
