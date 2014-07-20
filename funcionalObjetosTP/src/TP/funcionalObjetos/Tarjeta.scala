@@ -8,6 +8,7 @@ abstract class Tarjeta extends Recorrido
   def duracion = recorrido.duracion
   def decite = recorrido.decite
   def tramos = recorrido.tramos
+  def viajes = recorrido.viajes
 }
 
 case class TarjetaTurismo(recorrido:Recorrido, barrio:String, todoOAlguno:(Boolean,Boolean)=>Boolean = todo) extends Tarjeta

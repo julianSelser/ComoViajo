@@ -3,13 +3,15 @@ package TP.funcionalObjetos
 import mock._
 import math._
 
-abstract class Transporte{
+abstract class Transporte extends
+{
   def linea: String
   def compania: String
 
   def costoEntre(origen: Direccion, destino: Direccion): Float
   def duracionEntre(origen: Direccion, destino: Direccion): Float
-  def nombre = this.toString.split('(').head
+  def nombre = this.toString
+  override def toString = this.getClass.toString.split('.').last
 }
 
 trait TransporteConEstaciones {

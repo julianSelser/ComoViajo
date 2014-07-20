@@ -6,7 +6,7 @@ trait Recorrido
   def duracion:Float
   def decite:String
   def tramos:List[Tramo]
-  //def transportes = tramos.map(tramo => tramo)
+  def viajes:List[Viaje]
 }
 
 class RecorridoBase(val tramos:List[Tramo]) extends Recorrido
@@ -15,5 +15,7 @@ class RecorridoBase(val tramos:List[Tramo]) extends Recorrido
   
   def duracion = tramos.foldLeft(0f)((resultado, tramo) => resultado + tramo.duracion)
   
-  def decite = tramos.foldLeft("")((comoViajar, tramo) => comoViajar + tramo.decite)
+  def decite = tramos.foldLeft("")((comoViajar, tramo) => comoViajar + tramo.decite) + " Costo: " + precio.toString
+
+  def viajes = tramos.foldLeft(List.empty[Viaje])((viajes,tramo) => tramo match{case t:Viaje=>t::viajes;case _ => viajes})
 }

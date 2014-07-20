@@ -9,7 +9,7 @@ class MetodoMock[TipoParametros, TipoRetorno]
   def setRetornoDefault(default:TipoRetorno) = {
     metodoMockeado = params => { default }
   }
-  
+    
   def devuelve(retorno:TipoRetorno) =  {
     val metodoAntes = metodoMockeado
     

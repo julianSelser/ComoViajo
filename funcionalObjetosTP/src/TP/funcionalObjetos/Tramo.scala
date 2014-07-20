@@ -17,10 +17,15 @@ case class Camninando(origen: Direccion, destino: Direccion, duracion: Float, co
 }
 
 //todo esto lo hice a ultimo momento...ver despues que se puede arreglar y como poner las estaciones...
-case class Viajando(transporte: Transporte, origen: Direccion, destino: Direccion, costo: Float, duracion: Float) extends Tramo{
+case class Viaje(transporte: Transporte, origen: Direccion, destino: Direccion, costo: Float, duracion: Float) extends Tramo{
   def decite = {
-    " En la calle " + origen.calle + " al " + origen.altura + " subirse al " + transporte.nombre +  " y viajar durante " + duracion.toString + " minutos antes de bajarse en la calle " + destino.calle + "."  
-  }   
+    " En la calle " + origen.calle + " al " + origen.altura + " subirse al " + transporte +  " y viajar durante " + duracion.toString + " minutos antes de bajarse en la calle " + destino.calle + "."  
+  }
+  
+  //un viaje pertenece a la zona donde se lo toma, por mas que la zona destino sea otra
+  //sino lo que pasa es que se duplican los valores en las estadisticas
+  //porque el mismo viaje esta 2 veces, cuando enrealidad es uno solo
+  def zona = origen.zona  
 }
 
 //a esta clase hay que pasarle los transportes para que sepa que esta combinando, es facil de hacer
@@ -103,9 +108,9 @@ case class ArmarCombinacion(seguir:Boolean = true)
     val tr2 = p2.transporte
     
     List(
-      Viajando(tr1, p1.direccion, dt1d, tr1.costoEntre(p1.direccion, dt1d), tr1.duracionEntre(p1.direccion, dt1d)),
+      Viaje(tr1, p1.direccion, dt1d, tr1.costoEntre(p1.direccion, dt1d), tr1.duracionEntre(p1.direccion, dt1d)),
       Combinando(duracion, costo),
-      Viajando(tr2, dt2o, p2.direccion, tr2.costoEntre(dt2o, p2.direccion), tr2.duracionEntre(dt2o, p2.direccion)))
+      Viaje(tr2, dt2o, p2.direccion, tr2.costoEntre(dt2o, p2.direccion), tr2.duracionEntre(dt2o, p2.direccion)))
   }
 }
 
